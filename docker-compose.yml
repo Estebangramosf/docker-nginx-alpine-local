@@ -1,0 +1,24 @@
+version: "3.6"
+
+
+# List of Services to Nginx Alpine
+services:
+  nginx_alpine:
+    container_name: nginx_alpine
+    build:
+      context: .
+      dockerfile: dockerfiles/NginxAlpine.Dockerfile
+    volumes:
+      - ./dockerfiles/sites-availables:/etc/nginx/sites-availables
+      - ./dockerfiles/conf.d:/etc/nginx/conf.d
+      - ./extra_data:/opt
+    tty: true
+    restart: always
+    networks:
+      - nginx_alpine_net
+    ports:
+      - 80:80
+
+networks:
+  nginx_alpine_net:
+    external: true
